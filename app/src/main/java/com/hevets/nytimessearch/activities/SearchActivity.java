@@ -97,6 +97,12 @@ public class SearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void filterSearch(MenuItem menuItem) {
+        // create an intent to display the article
+        Intent i = new Intent(getApplicationContext(), FilterActivity.class);
+        startActivity(i);
+    }
+
     public void onArticleSearch(View view) {
         AsyncHttpClient client = new AsyncHttpClient();
 
