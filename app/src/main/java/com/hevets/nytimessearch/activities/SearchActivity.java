@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.hevets.nytimessearch.Article;
 import com.hevets.nytimessearch.ArticleArrayAdapter;
 import com.hevets.nytimessearch.R;
+import com.hevets.nytimessearch.models.Filter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -36,7 +37,9 @@ public class SearchActivity extends AppCompatActivity {
     Button btnSearch;
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
+    Filter filter;
 
+    public static final int FILTER_REQUEST = 20;
     public static final String BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     public static final String API_KEY = "acd6cbc96d474f5a9e2c06a347f8921a";
 
@@ -48,6 +51,19 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setupViews();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == FILTER_REQUEST) {
+            // Extract name value from result extras
+            filter = (Filter)data.getExtras().get("filter");
+            String sortby = filter.getSortby();
+            int code = data.getExtras().getInt("code", 0);
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, sortby, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setupViews() {
@@ -100,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
     public void filterSearch(MenuItem menuItem) {
         // create an intent to display the article
         Intent i = new Intent(getApplicationContext(), FilterActivity.class);
-        startActivity(i);
+        startActivityForResult(i, FILTER_REQUEST);
     }
 
     public void onArticleSearch(View view) {

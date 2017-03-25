@@ -6,4 +6,7 @@
     <string name="title_activity_article">ArticleActivity</string>
     <string name="filter">Filter</string>
     <string name="title_activity_filter">FilterActivity</string>
+    <string name="radio_newest">Newest</string>
+    <string name="radio_oldest">Oldest</string>
+    <string name="submit">Submit</string>
 </resources>
